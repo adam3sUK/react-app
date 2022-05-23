@@ -1,30 +1,22 @@
 import logo from './images/logo.svg';
 import './App.css';
-import Profile from './components/Profile';
-import { useContext} from 'react';
-import {Context} from './Context';
+import {Routes, Route, Link} from 'react-router-dom'
+import Profiles from './pages/Profiles';
+import FavProfiles from './pages/FavProfiles';
 
 export default function App() {
-  const {profileData, addProfile} = useContext(Context)
-
-  const profiles = profileData.map((profile, index) => {
-    return <Profile 
-      key={index} 
-      id={index} 
-      name={`${profile.name.first} ${profile.name.last}`} 
-      description={`${profile.location.street.name} ${profile.location.country}`} 
-    />
-  })
 
   return (
     <div className="App">
-      <img src={logo} className="App-logo" alt="logo" />
-      <h1>Add and delete profiles</h1>
-      <button onClick={addProfile} className="profile-btn mb-20">Add Profile</button>
-      <div className='profile-wrap'>
-        {profiles}
-      </div>
-
+      <nav className='navbar'>
+        <img src={logo} className="App-logo" alt="logo" />
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/fav">Favourites</Link></li>
+      </nav>
+      <Routes>
+        <Route exact path="/" element={<Profiles />} />
+        <Route path="/fav" element={<FavProfiles />} />
+      </Routes>
     </div>
   );
 }
