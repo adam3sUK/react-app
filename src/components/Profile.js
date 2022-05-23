@@ -7,7 +7,7 @@ const Profile = (props) => {
     <div className='profile' id={props.id}>
       <h1>{props.name}</h1>
       <p>{props.description}</p>
-      <button onClick={() => removeProfile(props.id)}>Delete Profile</button>
+      <button className="profile-btn" onClick={() => removeProfile(props.id)}>Delete Profile</button>
     </div>
   )
 }

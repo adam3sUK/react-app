@@ -5,7 +5,7 @@ import { useContext} from 'react';
 import {Context} from './Context';
 
 export default function App() {
-  const {profileData} = useContext(Context)
+  const {profileData, addProfile} = useContext(Context)
 
   const profiles = profileData.map((profile, index) => {
     return <Profile 
@@ -19,10 +19,12 @@ export default function App() {
   return (
     <div className="App">
       <img src={logo} className="App-logo" alt="logo" />
-      <h1>Fun facts about React</h1>
+      <h1>Add and delete profiles</h1>
+      <button onClick={addProfile} className="profile-btn mb-20">Add Profile</button>
       <div className='profile-wrap'>
         {profiles}
       </div>
+
     </div>
   );
 }
