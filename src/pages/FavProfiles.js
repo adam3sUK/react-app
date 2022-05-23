@@ -5,15 +5,18 @@ import { useContext} from 'react';
 import { Context } from "../Context";
 
 const FavProfiles = () => {
-  const {favouriteProfileData} = useContext(Context)
+  const {profileData} = useContext(Context)
 
-  const profiles = favouriteProfileData.map((profile, index) => {
-    return <Profile 
-      key={index} 
-      id={index} 
-      name={`${profile.name.first} ${profile.name.last}`} 
-      description={`${profile.location.street.name} ${profile.location.country}`} 
-    />
+  const profiles = profileData.map(profile => {
+    if (profile.isFavourite) {
+      return <Profile 
+        key={profile.uid} 
+        id={profile.uid} 
+        isFavourite={profile.isFavourite}
+        name={`${profile.name.first} ${profile.name.last}`} 
+        description={`${profile.location.street.name} ${profile.location.country}`} 
+      />
+    }
   })
 
   return (
@@ -21,7 +24,7 @@ const FavProfiles = () => {
       <h1 className="text-center">Favourite profiles</h1>
       <div className='profile-wrap'>
         {profiles} 
-        { !favouriteProfileData.length && <h2>No favourite profiles</h2>}
+        { profiles.length < 1 && <h2>No favourite profiles</h2>}
       </div>
     </>
   );

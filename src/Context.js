@@ -4,23 +4,22 @@ const Context = React.createContext()
 
 const ContextProvider = ({children}) => {
   const [profileData, setProfileData] = useState([])
-  const [favouriteProfileData, setFavouriteProfileData] = useState([])
+
+  const addFavAndUid = (obj) => {
+    return {
+      ...obj,
+      isFavourite: false,
+      uid: uniqid()
+    }
+  }
 
   useEffect(() => {
     fetch('https://randomuser.me/api/?results=9')
     .then(res => res.json())
     .then(data => data.results.map(profile => {
-      return setProfileData(prevData => 
-        [...prevData, 
-          {
-            ...profile,
-            isFavourite: false,
-            uid: uniqid()
-          }])
+      return setProfileData(prevData => [...prevData, addFavAndUid(profile)])
     }))
   }, [])
-
-  console.log(profileData)
 
   const removeProfile = id => {
     setProfileData(prevData => prevData.filter(profile => {
@@ -31,36 +30,40 @@ const ContextProvider = ({children}) => {
   const addProfile = () => {
     fetch('https://randomuser.me/api/')
     .then(res => res.json())
-    .then(data => setProfileData(prevData => [{
-      ...data.results[0],
-      isFavourite: false,
-      uid: uniqid()
-    }, ...prevData]))
+    .then(data => setProfileData(prevData => [addFavAndUid(data.results[0]), ...prevData]))
   }
-
-  const addFavouriteProfile = id => {
-    const selectedProfile = profileData.id
-    if (!favouriteProfileData.filter(profile => profile === selectedProfile).length) {
-      setFavouriteProfileData(prevData => [selectedProfile, ...prevData])
-    }
-  }
-
-
 
   const addProfileRow = () => {
     const itemsToAdd = 3 - profileData.length % 3
     fetch(`https://randomuser.me/api/?results=${itemsToAdd}`)
     .then(res => res.json())
     .then(data => data.results.map(profile => {
-      return setProfileData(prevData => [profile, ...prevData])
+      return setProfileData(prevData => [addFavAndUid(profile), ...prevData])
     }))
   }
+
+  const toggleFavouriteProfile = id => {
+    const newProfileData = profileData.map(profile => {
+      if(profile.uid === id) {
+        return {
+          ...profile,
+          isFavourite: !profile.isFavourite
+        }
+      } else {
+        return profile
+      }
+    })
+    setProfileData(newProfileData)
+  }
+
+
+
+
 
   return (
     <Context.Provider value={{
       profileData,
-      favouriteProfileData,
-      addFavouriteProfile,
+      toggleFavouriteProfile,
       removeProfile,
       addProfile,
       addProfileRow

@@ -11,6 +11,7 @@ const Profiles = () => {
     return <Profile 
       key={profile.uid} 
       id={profile.uid} 
+      isFavourite={profile.isFavourite}
       name={`${profile.name.first} ${profile.name.last}`} 
       description={`${profile.location.street.name} ${profile.location.country}`} 
     />
