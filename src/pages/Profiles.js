@@ -7,10 +7,10 @@ import { Context } from "../Context";
 const Profiles = () => {
   const {profileData, addProfile, addProfileRow} = useContext(Context)
 
-  const profiles = profileData.map((profile, index) => {
+  const profiles = profileData.map(profile => {
     return <Profile 
-      key={index} 
-      id={index} 
+      key={profile.uid} 
+      id={profile.uid} 
       name={`${profile.name.first} ${profile.name.last}`} 
       description={`${profile.location.street.name} ${profile.location.country}`} 
     />
