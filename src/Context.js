@@ -56,10 +56,6 @@ const ContextProvider = ({children}) => {
     setProfileData(newProfileData)
   }
 
-
-
-
-
   return (
     <Context.Provider value={{
       profileData,
