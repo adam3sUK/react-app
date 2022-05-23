@@ -13,6 +13,27 @@
   }
 }
 
+.profile-wrap {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  flex: 1 1 0px;
+  flex-wrap: wrap;
+}
+
+.profile {
+  background-color: #282c34;
+  color: white;
+  box-shadow: 0 0 5px -2px black;
+  display: block;
+  padding: 15px;
+  width: 100%;
+  margin: 20px;
+  flex-basis: calc((100% / 3) - 80px);
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
